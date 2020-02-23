@@ -9,6 +9,8 @@
 
 /var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
 
+/proc/shutdown_logging()
+	call(RUST_G, "log_close_all")()
 
 /proc/error(msg)
 	to_world_log("## ERROR: [msg][log_end]")
@@ -34,7 +36,7 @@
 	to_world_log("## TESTING: [msg][log_end]")
 
 /proc/game_log(category, text)
-	diary << "\[[time_stamp()]] [game_id] [category]: [text][log_end]"
+	WRITE_LOG(diary, "\[[time_stamp()]] [game_id] [category]: [text][log_end]")
 
 /proc/log_admin(text)
 	GLOB.admin_log.Add(text)
@@ -111,7 +113,7 @@
 	log_debug(text)
 
 /proc/log_qdel(text)
-	WRITE_FILE(GLOB.world_qdel_log, "\[[time_stamp()]]QDEL: [text]")
+	WRITE_LOG(GLOB.world_qdel_log, "\[[time_stamp()]]QDEL: [text]")
 
 //This replaces world.log so it displays both in DD and the file
 /proc/log_world(text)

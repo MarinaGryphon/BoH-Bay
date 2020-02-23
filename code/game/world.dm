@@ -502,8 +502,11 @@ var/world_topic_spam_protect_time = world.timeofday
 
 	if (hard_reset)
 		log_misc("World hard rebooted at [time_stamp()].")
+		shutdown_logging()
 		world.TgsEndProcess()
-
+	
+	log_misc("World soft rebooted at [time_stamp()].")
+	shutdown_logging()
 	..(reason)
 
 /world/Del()

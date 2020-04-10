@@ -245,6 +245,10 @@ Helpers
 	mode_datum.create_antagonists() // Init operation on the mode; sets up antag datums and such.
 	mode_datum.pre_setup() // Makes lists of viable candidates; performs candidate draft for job-override roles; stores the draft result both internally and on the draftee.
 	SSjobs.divide_occupations(mode_datum) // Gives out jobs to everyone who was not selected to antag.
+	// Set up AI spawn locations if we don't have one
+	var/datum/job/AI/maybeAI = get_by_path(jobtype)
+	if(maybeAI.is_position_available)
+		spawn_empty_ai()
 
 	if(mode_datum.startRequirements())
 		mode_datum.fail_setup()
